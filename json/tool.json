@@ -1,0 +1,57 @@
+{
+  "id": "node_id",
+  "type": "tool",
+  "config": {
+    // ========== 工具自身核心配置（运行时保留） ==========
+    "tool_name": "order_query",
+    "tool_desc": "根据用户提供的订单ID，查询用户订单详情、物流状态、支付信息",
+    "timeout": 15,
+    "retry_times": 1,
+    "param_list": [
+      {
+        "param_key": "order_id",
+        "param_type": "string",
+        "required": true,
+        "desc": "用户的唯一订单编号",
+        "default": "",
+        "from_state": "variables.order_id"
+      },
+      {
+        "param_key": "phone",
+        "param_type": "string",
+        "required": false,
+        "desc": "预留绑定手机号，用于二次校验",
+        "default": "",
+        "from_state": "user_query"
+      }
+    ],
+
+    // ========== 下游链路配置（Builder构图使用，运行剔除） ==========
+    "next_node": [
+      {
+        "id": "llm_summary_01",
+        "type": "llm",
+        "config": {
+          "model_name": "deepseek-chat",
+          "temperature": 0.6
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "state['tool_result']['code'] != 200",
+        "id": "tool_error_handle",
+        "type": "llm",
+        "config": {
+          "system_prompt": "工具调用失败，请友好回复用户"
+        }
+      },
+      {
+        "condition": "true",
+        "id": "end_node",
+        "type": "end",
+        "config": {}
+      }
+    ]
+  }
+}

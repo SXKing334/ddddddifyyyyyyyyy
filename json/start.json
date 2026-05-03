@@ -1,0 +1,20 @@
+{
+  "id": "start_01",
+  "type": "start",
+  "config": {
+    "workflow_type": "chat",
+    "init_variables": {
+      "biz_type": "",
+      "trace_id": ""
+    },
+    "timeout": 60,
+    "next_node": [
+      {
+        "id": "llm_intent_01",
+        "type": "llm",
+        "config": {}
+      }
+    ],
+    "conditions": []
+  }
+}

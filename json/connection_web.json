@@ -1,0 +1,48 @@
+{
+  "id": "node_id",
+  "type": "web",
+  "config": {
+    "search_engine": "bing",
+    "max_result_num": 5,
+    "timeout": 15,
+    "need_summary": true,
+    "search_key_from": "state.user_query",
+
+    "进入后端构成图时": "构成图是去装下一个节点的配置",
+    "next_nodes": [
+      {
+        "id": "node_id",
+        "type": "xxxx",
+        "config": {
+          "tool配置": "比如参数等其他数据"
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "state['xxx'] == 'xxx'",
+        "id": "node_id",
+        "type": "xxxx",
+        "config": {
+          "节点配置": "比如参数等其他数据"
+        }
+      }
+    ],
+
+
+    "后端运行图后得出的结果输出": "塞入全局的state，不放这个config",
+    "output_data": [
+      {
+        "title": "xxxxx",
+        "source": "xxxxx.com",
+        "summary": "xxxxxxxx"
+      },
+      {
+        "title": "xxxxx",
+        "source": "xxxx.com",
+        "summary": "xxxxxxxx"
+      },
+      ...
+    ]
+  }
+}

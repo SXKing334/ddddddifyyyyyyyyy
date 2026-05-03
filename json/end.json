@@ -1,0 +1,15 @@
+{
+  "id": "end_01",
+  "type": "end",
+  "config": {
+    "output_mapping": {
+      "answer": "state.final_answer",
+      "reference": "state.rag_context",
+      "tool_info": "state.tool_result"
+    },
+    "clear_temp_vars": true,
+    "need_summary": false,
+    "next_node": [],
+    "conditions": []
+  }
+}

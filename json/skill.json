@@ -1,0 +1,48 @@
+{
+  "id": "skill_01",
+  "type": "skill",
+  "config": {
+    "skill_name": "order_query",
+    "skill_desc": "订单查询业务技能",
+    "skill_version": "v1.0",
+    "need_auth": true,
+    "param_list": [
+      {
+        "param_key": "order_id",
+        "param_type": "string",
+        "required": true,
+        "desc": "订单编号"
+      },
+      {
+        "param_key": "user_id",
+        "param_type": "string",
+        "required": true,
+        "from_state": "user_id",
+        "desc": "用户ID"
+      }
+    ],
+    "next_node": [
+      {
+        "id": "llm_answer",
+        "type": "llm",
+        "config": {
+          "system_prompt": "请把订单结果整理成自然语言"
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "state['skill_result']['status'] == 'pending'",
+        "id": "notify_user",
+        "type": "llm",
+        "config": {}
+      },
+      {
+        "condition": "true",
+        "id": "end_node",
+        "type": "end",
+        "config": {}
+      }
+    ]
+  }
+}

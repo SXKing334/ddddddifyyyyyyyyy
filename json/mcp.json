@@ -1,0 +1,52 @@
+{
+  "id": "node_id",
+  "type": "mcp",
+  "config": {
+    "mcp_name": "mcp_code_interpreter",
+    "mcp_desc": "代码执行器，可运行 Python / JS 代码",
+    "server_name": "code_interpreter_server",
+    "auth_type": "api_key",
+    "timeout": 30,
+    "param_list": [
+      {
+        "param_key": "code",
+        "param_type": "string",
+        "required": true,
+        "desc": "需要执行的代码内容"
+      },
+      {
+        "param_key": "language",
+        "param_type": "string",
+        "required": true,
+        "default": "python",
+        "desc": "代码语言"
+      }
+    ],
+    "next_node": [
+      {
+        "id": "llm_format_result",
+        "type": "llm",
+        "config": {
+          "model_name": "deepseek",
+          "temperature": 0.1
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "state['mcp_result']['success'] == false",
+        "id": "error_handler",
+        "type": "llm",
+        "config": {
+          "system_prompt": "代码执行失败，请告诉用户错误原因"
+        }
+      },
+      {
+        "condition": "true",
+        "id": "end_node",
+        "type": "end",
+        "config": {}
+      }
+    ]
+  }
+}

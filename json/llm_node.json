@@ -1,0 +1,32 @@
+{
+  "id": "llm_1",
+  "type": "llm",
+  "config": {
+    "model_name": "www",
+    "temperature": "xxx",
+    "max_tokens": "yyy",
+    "top_p": "zzz",
+
+    "进入后端后": "会添加的字段",
+    "next_nodes":[
+      {
+        "id": "node_id",
+        "type": "xxxx",
+        "config": {
+          "tool配置": "比如参数等其他数据"
+        }
+      }
+    ],
+    "如果是条件进入某些节点": "比如tool或者skills或者mcp等",
+    "conditions": [
+      {
+        "condition": "state['xxx'] == 'xxx'",
+        "id": "node_id",
+        "type": "xxxx",
+        "config": {
+          "节点配置": "比如参数等其他数据"
+        }
+      }
+    ]
+  }
+}

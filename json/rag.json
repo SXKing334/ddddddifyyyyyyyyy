@@ -1,0 +1,69 @@
+{
+  "id": "rag_knowledge_01",
+  "type": "rag",
+  "config": {
+    // 基础知识库配置
+    "knowledge_base_id": "kb_20260430_001",
+    "kb_name": "产品售后知识库",
+    "search_mode": "hybrid",
+    "similarity_threshold": 0.72,
+    "top_k": 5,
+
+    // 切片/召回增强配置
+    "chunk_size": 1024,
+    "chunk_overlap": 128,
+    "enable_rerank": true,
+    "rerank_model": "bge-rerank",
+    "enable_keyword_extract": true,
+
+    // 入参映射（从全局State取检索问题）
+    "param_list": [
+      {
+        "param_key": "query",
+        "param_type": "string",
+        "required": true,
+        "desc": "检索问句",
+        "from_state": "user_query"
+      },
+      {
+        "param_key": "filter_tags",
+        "param_type": "array",
+        "required": false,
+        "desc": "知识库标签过滤",
+        "default": []
+      }
+    ],
+
+    // 固定输出写入State字段
+    "result_state_key": "rag_context",
+
+    // ---------- 下游链路（构图使用，运行自动剔除） ----------
+    "next_node": [
+      {
+        "id": "llm_answer_01",
+        "type": "llm",
+        "config": {
+          "model_name": "deepseek-chat",
+          "temperature": 0.3,
+          "system_prompt": "严格基于知识库内容回答，禁止幻觉"
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "len(state['rag_context']) < 20",
+        "id": "rag_no_content_node",
+        "type": "llm",
+        "config": {
+          "system_prompt": "知识库未查询到相关内容，请如实告知用户"
+        }
+      },
+      {
+        "condition": "true",
+        "id": "llm_answer_01",
+        "type": "llm",
+        "config": {}
+      }
+    ]
+  }
+}
