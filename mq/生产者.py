@@ -34,6 +34,7 @@ channel.basic_publish(exchange='',
                       routing_key='novel_1',
                       body='Hello World')
 
+
 # ==================== 关闭连接 ====================
 # 关闭连接，释放资源
 # 这会自动关闭连接下所有的通道，并且通知 RabbitMQ 服务端断开
