@@ -3,10 +3,8 @@
   "user_id": "xxxx",
   "session_id": "xxxx",
   "files": [
-    "xxxxxxxxxxxxxxxxxxxxxx",
-    "xxxxxxxxxxxxxxxxxxxxxx",
-    "xxxxxxxxxxxxxxxxxxxxxx",
-    "..."
+    "file_01",
+    "file_02"
   ],
   "nodes": [
     {
@@ -40,30 +38,22 @@
     },
     "..."
   ],
-  "condition_nodes": [
+  "conditions": [
     {
       "id": "node_id",
       "type": "condition",
       "source": "node_id",
-      "goto": [
-        {
-          "condition": "state['xxx'] == 'xxx'",
-          "target": "node_id"
-        },
-        "...",
-        {
-          "condition": "state['xxx'] == true",
-          "target": "end"
-        }
-      ],
+      "default": "node_id",
+      "branches": {
+          "条件": "节点id",
+          "state['xxx'] == 'xxx'": "target",
+          "state['xxx'] == true": "target"
+      },
       "config": {
         "coord": [1234, 432],
         "xxx": "xxx",
         "yyy": "yyy"
       }
-    },
-    {
-      ...
     }
   ]
 }

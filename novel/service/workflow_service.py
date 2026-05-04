@@ -4,10 +4,12 @@ from fastapi.params import Depends
 from sqlalchemy import select, func, insert, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from novel.agent.graph.builder import DynamicGraphBuilder
 from novel.infrastructure.db.models.workflow import WorkFlow as WorkFlowORM
 from novel.infrastructure.redis.repo.tentant_repo import TenantRedisRepository, get_tenant_redis_repo
 from novel.infrastructure.redis.repo.user_repo import UserRedisRepository, get_user_redis_repo
 from novel.infrastructure.redis.repo.workflow_repo import WorkflowRedisRepo, get_workflow_redis_repo
+from novel.service.file_service import FileService
 from novel.shared.schemas.public import APIResponse
 from novel.shared.schemas.workflow import (
     Workflow as WorkflowSchema,
@@ -23,9 +25,10 @@ class WorkFlowService:
 
     def __init__(
             self,
-            user_repo: UserRedisRepository = Depends(get_user_redis_repo),
-            tenant_repo: TenantRedisRepository = Depends(get_tenant_redis_repo),
-            workflow_repo: WorkflowRedisRepo = Depends(get_workflow_redis_repo)
+            user_repo: UserRedisRepository = Depends(get_user_redis_repo),           # user的redis仓库
+            tenant_repo: TenantRedisRepository = Depends(get_tenant_redis_repo),     # tenant的redis仓库
+            workflow_repo: WorkflowRedisRepo = Depends(get_workflow_redis_repo),     # workflow的redis仓库
+            file_service: FileService = Depends(FileService),                        # FileService服务
     ):
         self.user_repo = user_repo
         self.tenant_repo = tenant_repo
@@ -37,6 +40,7 @@ class WorkFlowService:
         :param start:
         :return:
         """
+
 
     async def create_workflow(self, db: AsyncSession, workflow: WorkflowSchema) -> APIResponse:
         """
