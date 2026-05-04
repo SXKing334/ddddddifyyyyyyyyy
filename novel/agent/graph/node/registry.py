@@ -1,20 +1,24 @@
 # novel\agent\node\registry.py
 
-from .start import start_node
-from .end import end_node
-from .llm import llm_node
-from .rag import rag_node
-from .tool import tool_node
-from .condition import condition_node
+from .start import call_start
+from .end import call_end
+from .llm import call_llm
+from .rag import call_rag
+from .tool import call_tool
+from .web import call_web
+from .skill import call_skill
+from .mcp import call_mcp
 
 # 节点注册表（前端也可以用这个生成节点面板！）
 NODE_REGISTRY = {
-    "start": start_node,
-    "end": end_node,
-    "llm": llm_node,
-    "rag": rag_node,
-    "tool": tool_node,
-    "condition": condition_node,
+    "start": call_start,
+    "end": call_end,
+    "llm": call_llm,
+    "rag": call_rag,
+    "tool": call_tool,
+    "web":call_web,
+    "skill":call_skill,
+    "mcp":call_mcp
 }
 
 # 获取节点函数

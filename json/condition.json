@@ -1,25 +1,18 @@
+
 {
   "id": "condition_01",
   "type": "condition",
+  "source": "node_id",
+  "default": "node_id",
+  "branches": {
+      "条件": "node_id",
+      "state['intent'] == '知识库问答'": "target_id",
+      "state['intent'] == '工具调用'": "target_id",
+      "state['web_result'] != null": "target_id"
+  },
   "config": {
-    "condition_type": "intent",
-    "logic_mode": "single",
-    "default_target_id": "end_01",
-    "expressions": [
-      {
-        "expr": "state['intent'] == '知识库问答'",
-        "target_id": "rag_01"
-      },
-      {
-        "expr": "state['intent'] == '工具调用'",
-        "target_id": "tool_01"
-      },
-      {
-        "expr": "state['web_result'] != null",
-        "target_id": "llm_web_summary"
-      }
-    ],
-    "next_node": [],
-    "conditions": []
+    "coord": [235, 345],
+    "xxx": "xx",
+    "yyy": "yy"
   }
 }

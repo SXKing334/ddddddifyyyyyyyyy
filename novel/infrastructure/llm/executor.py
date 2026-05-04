@@ -1,5 +1,5 @@
 # novel/infrastructure/llm/executor.py
-from typing import Optional, AsyncGenerator
+from typing import Optional, AsyncGenerator, Dict, Any
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.language_models import BaseChatModel
 
@@ -18,6 +18,12 @@ class QwenExecutor:
             **runtime_kwargs
     ):
         self.model: BaseChatModel = LLMFactory.create_model(model_name, api_key=api_key, **runtime_kwargs)
+
+    async def invoke_with_struct(
+            self
+    )->Dict[str, Any]:
+        pass
+
 
     async def invoke(
             self,
@@ -40,6 +46,7 @@ class QwenExecutor:
         messages.append(HumanMessage(content=prompt))
 
         response = await self.model.ainvoke(messages)
+
         return response.content
 
     async def stream(
